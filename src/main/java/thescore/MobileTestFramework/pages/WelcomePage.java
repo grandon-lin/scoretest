@@ -48,8 +48,23 @@ public class WelcomePage extends AppControl {
 		int elementY = loginBtn.getLocation().getY() + 20;
 		tapOnElementAtPosition(elementX, elementY);
 		
-		sendKeys("grandonlin@gmail.com", By.id(FieldLookup.EMAIL_INPUT_RESOURCE_ID));
-		sendKeys("Abcd123$", By.id(FieldLookup.PASSWORD_INPUT_RESOURCE_ID));
+		enterEmail("grandonlin@gmail.com");
+		enterPassword("Abcd123$");
+		loginTapped();
+	}
+	
+	public void enterEmail(String email)
+	{
+		sendKeys(email, By.id(FieldLookup.EMAIL_INPUT_RESOURCE_ID));
+	}
+	
+	public void enterPassword(String password)
+	{
+		sendKeys(password, By.id(FieldLookup.PASSWORD_INPUT_RESOURCE_ID));
+	}
+	
+	public void loginTapped()
+	{
 		tap(By.id(FieldLookup.LOGIN_BUTTON_RESOURCE_ID));
 	}
 }

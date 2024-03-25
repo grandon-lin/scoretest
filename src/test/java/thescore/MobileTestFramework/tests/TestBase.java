@@ -7,9 +7,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
@@ -24,7 +22,6 @@ public class TestBase {
 	@BeforeMethod
 	public void setup() throws Exception
 	{
-		System.out.println("In Before Test");
 		driver = new AndroidDriver<MobileElement>(new URL("http://0.0.0.0:4723/wd/hub"),setDesiredCapabilities());
 		wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id(FieldLookup.LOG_IN_BTN_RESOURCE_ID)));
@@ -40,7 +37,6 @@ public class TestBase {
 		caps.setCapability("appActivity", "com.fivemobile.thescore.ui.MainActivity");
 		caps.setCapability("automationName", AutomationName.ANDROID_UIAUTOMATOR2);
 		caps.setCapability("autoGrantPermissions", true);
-		System.out.println("Starting...");
 		return caps;
 	}
 		

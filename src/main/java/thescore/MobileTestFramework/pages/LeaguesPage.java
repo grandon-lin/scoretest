@@ -18,15 +18,12 @@ public class LeaguesPage extends AppControl {
 		By leagueXpath = By.xpath(FieldLookup.LEAGUES_PAGE_LIST_INDIVIDUAL_LEAGUE_XPATH(leagueName));
 		swipeDownToElment(leagueXpath);
 		tap(leagueXpath);
-		System.out.println("Open the league: " + leagueName);
 	}
 	
 	public boolean isSelectedLeagueAddedToTopBar(String selectedLeague)
 	{
 		swipeUpToElment(By.xpath(FieldLookup.LEAGUES_PAGE_TOP_BAR_XPATH));
-		By recyclerViewBy = By.xpath("//androidx.recyclerview.widget.RecyclerView/androidx.recyclerview.widget.RecyclerView");
 		By elementBy = By.xpath(FieldLookup.LEAGUES_PAGE_TOP_BAR_QUICK_ACCESS_XPATH(selectedLeague));
-		swipeRightToElement(recyclerViewBy, elementBy);
 		return isElementVisible(elementBy);
 	}
 }
