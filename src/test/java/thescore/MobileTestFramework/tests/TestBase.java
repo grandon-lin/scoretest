@@ -6,7 +6,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 import io.appium.java_client.MobileElement;
@@ -19,7 +21,7 @@ public class TestBase {
 	public AndroidDriver<MobileElement> driver;
 	public WebDriverWait wait;
 	
-	@BeforeTest
+	@BeforeMethod
 	public void setup() throws Exception
 	{
 		System.out.println("In Before Test");
@@ -42,7 +44,7 @@ public class TestBase {
 		return caps;
 	}
 		
-	@AfterTest
+	@AfterMethod
 	public void closeApplication()
 	{
 		driver.quit();

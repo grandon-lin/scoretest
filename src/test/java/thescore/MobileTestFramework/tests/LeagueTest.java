@@ -125,7 +125,7 @@ public class LeagueTest extends TestBase {
 			//Step 5. Navigate back and verify it returns to the previous page
 			mainControl.navigateBack();
 			expectedPageTitle = Constant.LEAGUES_PAGE_TITLE;
-			actualPageTitle = driver.findElement(By.id(FieldLookup.LEAGUES_PAGE_TITLE_RESOURCE_ID)).getText().toString();
+			actualPageTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(FieldLookup.LEAGUES_PAGE_TITLE_RESOURCE_ID))).getText();
 			Assert.assertEquals(expectedPageTitle, actualPageTitle);
 			Assert.assertTrue(leaguesPage.isSelectedLeagueAddedToTopBar(league));
 		}
