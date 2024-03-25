@@ -1,6 +1,9 @@
 package thescore.MobileTestFramework.tests;
 
+import java.net.URL;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
@@ -8,44 +11,40 @@ import org.testng.annotations.BeforeTest;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import thescore.MobileTestFramework.base.AppBase;
+import io.appium.java_client.remote.AutomationName;
 import thescore.MobileTestFramework.generalUtilities.FieldLookup;
-import thescore.MobileTestFramework.generalUtilities.ReadExcelUtils;
 
 public class TestBase {
 	
 	public AndroidDriver<MobileElement> driver;
-	public AppBase appBase;
 	public WebDriverWait wait;
-	
-	public TestBase() {
-		appBase = new AppBase();		
-	}
 	
 	@BeforeTest
 	public void setup() throws Exception
 	{
 		System.out.println("In Before Test");
-		driver = appBase.initializeDriver();
+		driver = new AndroidDriver<MobileElement>(new URL("http://0.0.0.0:4723/wd/hub"),setDesiredCapabilities());
 		wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id(FieldLookup.LOG_IN_BTN_RESOURCE_ID)));
-		
-		//Load test data file
-		String filePath = System.getProperty("user.dir") + "/src/test/resources/thescore.MobileTestFramework.testData" + "/exceldata.xlsx";
-		
-		try
-		{
-			ReadExcelUtils.setExcelFile(filePath, "Leagues");
-		}
-		catch (Exception e)
-		{
-			throw(e);
-		}
+	}
+	
+	private DesiredCapabilities setDesiredCapabilities()
+	{
+		DesiredCapabilities caps = new DesiredCapabilities();
+		caps.setCapability("platformName", "Android");
+		caps.setCapability("deviceName", "emulator-5554");
+		caps.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/thescore.MobileTestFramework.apps/" + "com.fivemobile.thescore_24.4.0-24040.apk");
+		caps.setCapability("appPackage", "com.fivemobile.thescore");
+		caps.setCapability("appActivity", "com.fivemobile.thescore.ui.MainActivity");
+		caps.setCapability("automationName", AutomationName.ANDROID_UIAUTOMATOR2);
+		caps.setCapability("autoGrantPermissions", true);
+		System.out.println("Starting...");
+		return caps;
 	}
 		
 	@AfterTest
 	public void closeApplication()
 	{
-//		driver.quit();
+		driver.quit();
 	}
 }

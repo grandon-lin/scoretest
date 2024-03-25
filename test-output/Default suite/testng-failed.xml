@@ -7,7 +7,7 @@
         <methods>
           <include name="setup"/>
           <include name="closeApplication"/>
-          <include name="testLeague"/>
+          <include name="getStartedTest"/>
         </methods>
       </class> <!-- thescore.MobileTestFramework.tests.LeagueTest -->
     </classes>

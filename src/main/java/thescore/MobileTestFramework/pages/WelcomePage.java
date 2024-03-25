@@ -14,6 +14,33 @@ public class WelcomePage extends AppControl {
 		super(aDriver);
 	}
 	
+	public void getStarted()
+	{
+		MobileElement getStartedBtn = driver.findElement(By.xpath(FieldLookup.GETSTARTED_BTN_XPATH));
+		getStartedBtn.click();
+		waitUntilElementClickable(By.xpath(FieldLookup.CONTINUE_BTN_XPATH));
+	}
+	
+	public void continueTapped()
+	{
+		MobileElement continueBtn = driver.findElement(By.xpath(FieldLookup.CONTINUE_BTN_XPATH));
+		continueBtn.click();
+	}
+	
+	public void doneTapped()
+	{
+		MobileElement doneBtn = driver.findElement(By.xpath(FieldLookup.DONE_BTN_XPATH));
+		doneBtn.click();
+	}
+
+	//For testing purpose for now
+	public void chooseFavoriteTeam()
+	{
+		MobileElement selectedTeam = driver.findElement(By.xpath("//androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.TextView"));
+		selectedTeam.click();
+		waitUntilElementClickable(By.xpath(FieldLookup.CONTINUE_BTN_XPATH));
+	}
+	
 	public void login()
 	{
 		MobileElement loginBtn = driver.findElement(By.id(FieldLookup.LOG_IN_BTN_RESOURCE_ID));

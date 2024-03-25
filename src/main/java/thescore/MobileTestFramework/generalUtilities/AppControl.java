@@ -13,6 +13,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
+@SuppressWarnings("rawtypes")
 public class AppControl {
 
 	protected AndroidDriver<MobileElement> driver;
@@ -27,11 +28,6 @@ public class AppControl {
 	public void tap(By by)
 	{
 		driver.findElement(by).click();
-//		try {
-//			driver.findElement(by).click();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 	}
 	
 	public void tapOnElementAtPosition(int coordinateX, int coordinateY)
@@ -55,7 +51,13 @@ public class AppControl {
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(by)));
 	}
 	
-	public void swipeToElment(By by)
+	public void waitUntilElementClickable(By by)
+	{
+		wait.until(ExpectedConditions.elementToBeClickable(by));
+	}
+	
+	//Swipe up to move down
+	public void swipeDownToElment(By by)
 	{
 		while(!isElementVisible(by))
 		{
@@ -63,12 +65,47 @@ public class AppControl {
 			TouchAction<?> touchAction = new TouchAction(driver);
 			Dimension size = driver.manage().window().getSize();
 			int x = size.getWidth() / 2;
-			int startPoint = size.getHeight() - 300;
-			int endPoint = 400;
+			int startPoint = (int)(size.getHeight() * 0.8);
+			int endPoint = (int)(size.getHeight() * 0.2);
 			
 			touchAction.press(PointOption.point(x, startPoint)).waitAction(WaitOptions.waitOptions(Duration.ofMillis(3000))).moveTo(PointOption.point(x, endPoint)).release().perform();
 		}
-		waitUntilElementVisible(by);
+		waitUntilElementClickable(by);
+	}
+	
+	//Swipe down to move up
+	public void swipeUpToElment(By by)
+	{
+		while(!isElementVisible(by))
+		{
+			System.out.println("Can't find the element yet");
+			TouchAction<?> touchAction = new TouchAction(driver);
+			Dimension size = driver.manage().window().getSize();
+			int x = size.getWidth() / 2;
+			int startPoint = (int)(size.getHeight() * 0.2);
+			int endPoint = (int)(size.getHeight() * 0.8);
+			
+			touchAction.press(PointOption.point(x, startPoint)).waitAction(WaitOptions.waitOptions(Duration.ofMillis(3000))).moveTo(PointOption.point(x, endPoint)).release().perform();
+		}
+		waitUntilElementClickable(by);
+	}
+	
+	//Swipe left to move right
+	public void swipeRightToElement(By recycleViewBy, By elementBy)
+	{
+		while(!isElementVisible(elementBy))
+		{
+			System.out.println("Can't find the element yet");
+			TouchAction<?> touchAction = new TouchAction(driver);
+			MobileElement recyclerView = driver.findElement(recycleViewBy);
+			int y = recyclerView.getCenter().getY();
+			Dimension size = driver.manage().window().getSize();
+			int startPoint = (int)(size.getWidth() * 0.9);
+			int endPoint = (int)(size.getWidth() * 0.1);
+			
+			touchAction.press(PointOption.point(startPoint, y)).waitAction(WaitOptions.waitOptions(Duration.ofMillis(3000))).moveTo(PointOption.point(endPoint, y)).release().perform();
+		}
+		waitUntilElementClickable(elementBy);
 	}
 	
 	public boolean isElementVisible(By by)
